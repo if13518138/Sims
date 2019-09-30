@@ -3,46 +3,32 @@ status(hyg, 0).
 status(fun, 0).
 status(en, 10).
 
-
 :- initialization(nl).
 :- initialization(write('Tulis "game." untuk memulai game pada konsol')).
 :- initialization(nl).
 
-
-
 % Prosedur - prosedur interface
 instructions() :- 
-				write("		 	,--------.,--.  "),nl,
-				write("			'--.  .--'|  ,---.  ,---. "),nl,
-				write("			   |  |   |  .-.  || .-. :"),nl,
-				write("			   |  |   |  | |  ||   --."),nl,
-				write("			   `--'   `--' `--' `----'"),nl,
-				write("                 ,---.  ,--.,--.   ,--. ,---.   "),nl,
-				write("                    .-' |  ||   `.'   |'   .-' "),nl,
-				write("                `.  `-. |  ||  |'.'|  |`.  `-."),nl,
-				write("                .-'    ||  ||  |   |  |.-'    | "),nl,
-				write("                `-----' `--'`--'   `--'`-----'"),nl,
+				write("				  ,--------.,--.  "),nl,
+				write("				  '--.  .--'|  ,---.  ,---. "),nl,
+				write("				     |  |   |  .-.  || .-. :"),nl,
+				write("				     |  |   |  | |  ||   --."),nl,
+				write("				     `--'   `--' `--' `----'"),nl,
+				write("			        ,---.  ,--.,--.   ,--. ,---.   "),nl,
+				write("			           .-' |  ||   `.'   |'   .-' "),nl,
+				write("			       `.  `-. |  ||  |'.'|  |`.  `-."),nl,
+				write("			       .-'    ||  ||  |   |  |.-'    | "),nl,
+				write("			       `-----' `--'`--'   `--'`-----'"),nl,
 				write('					Welcome to the The SIMS 2!!'),nl,
 				write('			Ini merupakan suatu permainan simulasi kehidupan sehari - hari'),nl,
 				write('		 Dengan memanfaatkan DFA dan diimplementasikan dengan bahasa Prolog!!'),nl.
-
-
- 
-           
- 
- 
- 
-
-
-
-
- 
 
 help() :- 
 		write('Masukkan perintah sesuai dengan command prolog!'),nl,
 		write('Perintah yang tersedia: '),nl,
 		write(' game.                         : Perintah untuk memulai permainan'),nl,
-		write(' "Help".                       : Perintah untuk menayangkan '),nl,
+		write(' "Help".                       : Perintah untuk menayangkan'),nl,
+		write(' "Exit".                       : Perintah untuk keluar dari game'),nl,
 		aksi(),
 		nl,nl.
 
@@ -57,8 +43,6 @@ aksi() :-
 
 selesai() :- 
 		write('Kelar').
-
-
  	
 % Fungsi cek status valid
 valid(Hyg, Fun, En) :-
@@ -87,7 +71,7 @@ addStatus(A,B,C) :-
 	!.
 addStatus(_,_,_) :-
 	writeln('Aksi tidak valid'),
-	tulis().
+	cek().
 
 tulis() :-
 	getStatus(X,Y,Z),
@@ -102,6 +86,8 @@ cek() :-
 	write('Fun     = '),writeln(Y),
 	write('Energy  = '),writeln(Z).
 
+validasi(X) :-
+	X == "Exit", halt.
 validasi(X) :- 
 	((X == "Help", call(help()));
 	(X == "Tidur Siang", call(tidur("Siang")));
@@ -182,9 +168,5 @@ game :-
     repeat,
     read(X),
     validasi(X),
+    nl,
     gameend();game.
-
-% ketika masukan tidak valid (komenan salah)
-%% game :-
-%% 	writeln("Command tidak valid."),
-%% 	game.
