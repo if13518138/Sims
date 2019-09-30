@@ -12,15 +12,26 @@ status(en, 10).
 
 % Prosedur - prosedur interface
 instructions() :- 
-				write('					 _______   _    _   ______ 	'),nl,													
-				write('					|__   __| | |  | | |  ____|'),nl,
-				write('					   | |    | |__| | | |__ '),nl,
-				write('					   | |    |  __  | |  __| '),nl,
-				write('					   | |    | |  | | | |____'),nl,
-				write('					   |_|    |_|  |_| |______|'),nl,
+				write("		 	,--------.,--.  "),nl,
+				write("			'--.  .--'|  ,---.  ,---. "),nl,
+				write("			   |  |   |  .-.  || .-. :"),nl,
+				write("			   |  |   |  | |  ||   --."),nl,
+				write("			   `--'   `--' `--' `----'"),nl,
+				write("                 ,---.  ,--.,--.   ,--. ,---.   "),nl,
+				write("                    .-' |  ||   `.'   |'   .-' "),nl,
+				write("                `.  `-. |  ||  |'.'|  |`.  `-."),nl,
+				write("                .-'    ||  ||  |   |  |.-'    | "),nl,
+				write("                `-----' `--'`--'   `--'`-----'"),nl,
 				write('					Welcome to the The SIMS 2!!'),nl,
 				write('			Ini merupakan suatu permainan simulasi kehidupan sehari - hari'),nl,
 				write('		 Dengan memanfaatkan DFA dan diimplementasikan dengan bahasa Prolog!!'),nl.
+
+
+ 
+           
+ 
+ 
+ 
 
 
 
@@ -30,7 +41,7 @@ instructions() :-
 help() :- 
 		write('Masukkan perintah sesuai dengan command prolog!'),nl,
 		write('Perintah yang tersedia: '),nl,
-		write(' game.                       : Perintah untuk memulai permainan'),nl,
+		write(' game.                         : Perintah untuk memulai permainan'),nl,
 		write(' "Help".                       : Perintah untuk menayangkan '),nl,
 		aksi(),
 		nl,nl.
@@ -46,12 +57,6 @@ aksi() :-
 
 selesai() :- 
 		write('Kelar').
-		%% write('  _______ _    _ ______   ______ _   _ _____ '),nl,
-		%% write(' |__   __| |  | |  ____| |  ____| \ | |  __ \ '),nl,
-		%% write('    | |  | |__| | |__    | |__  |  \| | |  | |'),nl,
-		%% write('    | |  |  __  |  __|   |  __| | . ` | |  | |'),nl,
-		%% write('    | |  | |  | | |____  | |____| |\  | |__| |'),nl.
-		%% %% write('    |_|  |_|  |_|______| |______|_| \_|_____/ '),nl.
 
 
  	
@@ -123,8 +128,8 @@ validasi(_) :-
 
 % Cek end game
 gameend() :-
-	(getStatus(0,0,0), writeln('Game selesai! Anda kalah. Silakan ketik "game." untuk mengulangi dari awal.'));
-	(getStatus(15,15,15), writeln('Game selesai! Anda menang! Silakan ketik "game." untuk bermain lagi.')).
+	(getStatus(0,0,0), selesai(), writeln('Game selesai! Anda kalah. Silakan ketik "game." untuk mengulangi dari awal.'));
+	(getStatus(15,15,15), selesai(), writeln('Game selesai! Anda menang! Silakan ketik "game." untuk bermain lagi.')).
 
 % Aksi dan konsekuensinya
 nonvalid() :-
