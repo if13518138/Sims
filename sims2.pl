@@ -9,16 +9,16 @@ status(en, 10).
 
 % Prosedur - prosedur interface
 instructions() :- 
-				write("				  ,--------.,--.  "),nl,
-				write("				  '--.  .--'|  ,---.  ,---. "),nl,
-				write("				     |  |   |  .-.  || .-. :"),nl,
-				write("				     |  |   |  | |  ||   --."),nl,
-				write("				     `--'   `--' `--' `----'"),nl,
-				write("			        ,---.  ,--.,--.   ,--. ,---.   "),nl,
-				write("			           .-' |  ||   `.'   |'   .-' "),nl,
-				write("			       `.  `-. |  ||  |'.'|  |`.  `-."),nl,
-				write("			       .-'    ||  ||  |   |  |.-'    | "),nl,
-				write("			       `-----' `--'`--'   `--'`-----'"),nl,
+				write("				         ,--------.,--.  "),nl,
+				write("				         '--.  .--'|  ,---.  ,---. "),nl,
+				write("				            |  |   |  .-.  || .-. :"),nl,
+				write("				            |  |   |  | |  ||   --."),nl,
+				write("				            `--'   `--' `--' `----'"),nl,
+				write("			               ,---.  ,--.,--.   ,--. ,---.   "),nl,
+				write("			                  .-' |  ||   `.'   |'   .-' "),nl,
+				write("			              `.  `-. |  ||  |'.'|  |`.  `-."),nl,
+				write("			              .-'    ||  ||  |   |  |.-'    | "),nl,
+				write("			              `-----' `--'`--'   `--'`-----'"),nl,
 				write('					Welcome to the The SIMS 2!!'),nl,
 				write('			Ini merupakan suatu permainan simulasi kehidupan sehari - hari'),nl,
 				write('		 Dengan memanfaatkan DFA dan diimplementasikan dengan bahasa Prolog!!'),nl.
@@ -27,8 +27,9 @@ help() :-
 		write('Masukkan perintah sesuai dengan command prolog!'),nl,
 		write('Perintah yang tersedia: '),nl,
 		write(' game.                         : Perintah untuk memulai permainan'),nl,
-		write(' "Help".                       : Perintah untuk menayangkan'),nl,
+		write(' "Help".                       : Perintah untuk menampilkan tulisan ini'),nl,
 		write(' "Exit".                       : Perintah untuk keluar dari game'),nl,
+		nl,
 		aksi(),
 		nl,nl.
 
@@ -119,7 +120,8 @@ gameend() :-
 
 % Aksi dan konsekuensinya
 nonvalid() :-
-	writeln("Command tidak ditemukan").
+	writeln("Command tidak ditemukan"),
+	writeln('Ketik "Help." untuk melihat aksi-aksi yang tersedia').
 
 tidur(X) :-
 	(addStatus(0,0,10), X == "Siang");
