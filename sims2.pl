@@ -3,6 +3,58 @@ status(hyg, 0).
 status(fun, 0).
 status(en, 10).
 
+
+:- initialization(nl).
+:- initialization(write('Tulis "game." untuk memulai game pada konsol')).
+:- initialization(nl).
+
+
+
+% Prosedur - prosedur interface
+instructions() :- 
+				write('					 _______   _    _   ______ 	'),nl,													
+				write('					|__   __| | |  | | |  ____|'),nl,
+				write('					   | |    | |__| | | |__ '),nl,
+				write('					   | |    |  __  | |  __| '),nl,
+				write('					   | |    | |  | | | |____'),nl,
+				write('					   |_|    |_|  |_| |______|'),nl,
+				write('					Welcome to the The SIMS 2!!'),nl,
+				write('			Ini merupakan suatu permainan simulasi kehidupan sehari - hari'),nl,
+				write('		 Dengan memanfaatkan DFA dan diimplementasikan dengan bahasa Prolog!!'),nl.
+
+
+
+
+ 
+
+help() :- 
+		write('Masukkan perintah sesuai dengan command prolog!'),nl,
+		write('Perintah yang tersedia: '),nl,
+		write(' game.                       : Perintah untuk memulai permainan'),nl,
+		write(' "Help".                       : Perintah untuk menayangkan '),nl,
+		aksi(),
+		nl,nl.
+
+aksi() :-
+		write('Aksi - aksi yang tersedia bagi pemain :'),nl,
+		write('"Tidur Siang".                   "Tidur Malam".                  "Makan Hamburger"'),nl,
+		write('"Makan Pizza".                   "Makan Steak and Beans".        "Minum Air".'),nl,
+		write('"Minum Kopi".                    "Minum Jus".                    "Buang Air Kecil".'),nl,
+		write('"Buang Air Besar".               "Bersosialisasi ke Kafe".       "Bermain Media Sosial".'),nl,
+		write('"Bermain Komputer".              "Mandi".                        "Cuci Tangan".'),nl,
+		write('"Mendengarkan Musik di Radio"    "Membaca Koran".                "Membaca Novel".'),nl.
+
+selesai() :- 
+		write('Kelar').
+		%% write('  _______ _    _ ______   ______ _   _ _____ '),nl,
+		%% write(' |__   __| |  | |  ____| |  ____| \ | |  __ \ '),nl,
+		%% write('    | |  | |__| | |__    | |__  |  \| | |  | |'),nl,
+		%% write('    | |  |  __  |  __|   |  __| | . ` | |  | |'),nl,
+		%% write('    | |  | |  | | |____  | |____| |\  | |__| |'),nl.
+		%% %% write('    |_|  |_|  |_|______| |______|_| \_|_____/ '),nl.
+
+
+ 	
 % Fungsi cek status valid
 valid(Hyg, Fun, En) :-
 	0 =:= Hyg mod 5, Hyg =< 15, Hyg >= 0,
@@ -29,7 +81,8 @@ addStatus(A,B,C) :-
 	tulis(),
 	!.
 addStatus(_,_,_) :-
-	writeln('Aksi tidak valid').
+	writeln('Aksi tidak valid'),
+	tulis().
 
 tulis() :-
 	getStatus(X,Y,Z),
@@ -45,6 +98,7 @@ cek() :-
 	write('Energy  = '),writeln(Z).
 
 validasi(X) :- 
+	((X == "Help", call(help()));
 	(X == "Tidur Siang", call(tidur("Siang")));
 	(X == "Tidur Malam", call(tidur("Malam")));
 	(X == "Makan Hamburger", call(makan("Hamburger")));
@@ -57,16 +111,23 @@ validasi(X) :-
 	(X == "Buang Air Besar", call(buang_air("Besar")));
 	(X == "Bersosialisasi ke Kafe", call(bersosialisasi_ke_kafe()));
 	(X == "Bermain Media Sosial", call(bermain_media_sosial()));
-	(X == "Bermain komputer", call(bermain_komputer()));
+	(X == "Bermain Komputer", call(bermain_komputer()));
 	(X == "Mandi", call(mandi()));
 	(X == "Cuci Tangan", call(cuci_tangan()));
 	(X == "Mendengarkan Musik di Radio", call(mendengarkan_musik_di_radio()));
 	(X == "Membaca Koran", call(membaca("Koran")));
-	(X == "Membaca Novel", call(membaca("Novel")));
-	(call(tes())).
+	(X == "Membaca Novel", call(membaca("Novel")))),
+	!.
+validasi(_) :-
+	call(nonvalid()).
+
+% Cek end game
+gameend() :-
+	(getStatus(0,0,0), writeln('Game selesai! Anda kalah. Silakan ketik "game." untuk mengulangi dari awal.'));
+	(getStatus(15,15,15), writeln('Game selesai! Anda menang! Silakan ketik "game." untuk bermain lagi.')).
 
 % Aksi dan konsekuensinya
-tes() :-
+nonvalid() :-
 	writeln("Command tidak ditemukan").
 
 tidur(X) :-
@@ -111,12 +172,12 @@ buang_air(X) :-
 
 % Main Loop
 game :-
+	instructions(),
+	help(),
     repeat,
-    write('> '),
     read(X),
-    writeln(X),
     validasi(X),
-    game.
+    gameend();game.
 
 % ketika masukan tidak valid (komenan salah)
 %% game :-
