@@ -28,6 +28,7 @@ help() :-
 		write('Perintah yang tersedia: '),nl,
 		write(' game.                         : Perintah untuk memulai permainan'),nl,
 		write(' "Help".                       : Perintah untuk menampilkan tulisan ini'),nl,
+		write(' "Cek".						  : Perintah untuk menampilkan score'),nl,
 		write(' "Exit".                       : Perintah untuk keluar dari game'),nl,
 		nl,
 		aksi(),
@@ -43,7 +44,22 @@ aksi() :-
 		write('"Mendengarkan Musik di Radio"    "Membaca Koran".                "Membaca Novel".'),nl.
 
 selesai() :- 
-		write('Kelar').
+		getStatus(X,Y,Z),
+		XX is 0,
+		YY is 0,
+		ZZ is 10,
+		valid(XX,YY,ZZ),
+		retract(status(hyg,X)),
+		retract(status(fun,Y)),
+		retract(status(en,Z)),
+		assert(status(hyg,XX)),
+		assert(status(fun,YY)),
+		assert(status(en,ZZ)),
+		write(",--------.,--.                ,------.           ,--. "),nl,
+		write(" --.  .--'|  ,---.  ,---.     |  .---',--,--,  ,-|  | "),nl,
+		write("   |  |   |  .-.  || .-. :    |  `--, |      |' .-. |"),nl,
+		write("   |  |   |  | |  ||   --.    |  `---.|  ||  || `-' | "),nl,
+		write("   `--'   `--' `--' `----'    `------'`--''--' `---' "),nl.
  	
 % Fungsi cek status valid
 valid(Hyg, Fun, En) :-
@@ -71,8 +87,7 @@ addStatus(A,B,C) :-
 	tulis(),
 	!.
 addStatus(_,_,_) :-
-	writeln('Aksi tidak valid'),
-	cek().
+	writeln('Aksi tidak valid').
 
 tulis() :-
 	getStatus(X,Y,Z),
@@ -83,6 +98,7 @@ tulis() :-
 % Fungsi tambahan untuk cek status sekarang
 cek() :-
 	getStatus(X,Y,Z),
+	write("Score :"),nl,
 	write('Hygiene = '),writeln(X),
 	write('Fun     = '),writeln(Y),
 	write('Energy  = '),writeln(Z).
@@ -91,6 +107,7 @@ validasi(X) :-
 	X == "Exit", halt.
 validasi(X) :- 
 	((X == "Help", call(help()));
+	(X == "Cek", call(cek()));
 	(X == "Tidur Siang", call(tidur("Siang")));
 	(X == "Tidur Malam", call(tidur("Malam")));
 	(X == "Makan Hamburger", call(makan("Hamburger")));
@@ -124,8 +141,8 @@ nonvalid() :-
 	writeln('Ketik "Help." untuk melihat aksi-aksi yang tersedia').
 
 tidur(X) :-
-	(addStatus(0,0,10), X == "Siang");
-	(addStatus(0,0,15), X == "Malam").
+	( X == "Siang",addStatus(0,0,10));
+	( X == "Malam",addStatus(0,0,15)).
 
 mandi() :-
 	addStatus(15,0,-5).
